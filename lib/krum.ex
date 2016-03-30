@@ -5,7 +5,19 @@ defmodule Krum do
 
   @spec notify_app(String.t, String.t, String.t) :: {:ok, String.t} | {:error, String.t}
   def notify_app(app_uuid, title, body) do
-    body = make_message("app", app_uuid, title, body) |> encode_message
+    make_message("app", app_uuid, title, body)
+    |> encode_message
+    |> make_request
+  end
+
+  @spec notify_user(String.t, String.t, String.t) :: {:ok, String.t} | {:error, String.t}
+  def notify_user(user_uuid, title, body) do
+    make_message("user", user_uuid, title, body)
+    |> encode_message
+    |> make_request
+  end
+
+  defp make_request(body) do
     HTTPoison.post(endpoint, body, headers)
     |> handle_response
   end

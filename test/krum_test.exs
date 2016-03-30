@@ -41,4 +41,23 @@ defmodule Krum.Test do
     end
   end
 
+  test "notify_user sends a notification through Telex to the specified user" do
+    user_uuid = "1942517b-7035-486c-aca0-414a59e70ccf"
+    fake_response = %Response{status_code: 201, body: "{\"id\": \"abcdef\"}"}
+    with_mock HTTPoison, [post: fn(_, _, _) -> {:ok, fake_response} end] do
+      {:ok, "abcdef"} = Krum.notify_user(user_uuid, "testing", "test body")
+
+      {:ok, endpoint_url} = Application.fetch_env(:krum, :endpoint_url)
+      expected_path = Path.join(endpoint_url, "/producer/messages")
+
+      headers = Krum.headers
+
+      args = %{:title => "testing",
+               :body  => "test body",
+               :target => %{:type => "user", :id => user_uuid}}
+      body = Poison.encode! args
+
+      assert called HTTPoison.post(expected_path, body, headers)
+    end
+  end
 end
