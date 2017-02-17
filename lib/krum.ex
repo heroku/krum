@@ -18,7 +18,7 @@ defmodule Krum do
   end
 
   defp make_request(body) do
-    HTTPoison.post(endpoint, body, headers)
+    HTTPoison.post(endpoint(), body, headers())
     |> handle_response
   end
 
@@ -43,12 +43,12 @@ defmodule Krum do
   @spec headers :: [{String.t, String.t}]
   def headers do
     [{"Content-Type", "application/json"},
-     {"User-Agent", user_agent}]
+     {"User-Agent", user_agent()}]
   end
 
   @spec user_agent :: String.t
   defp user_agent do
-    "krum" <> "/" <> version
+    "krum" <> "/" <> version()
   end
 
   @spec encode_message(%{atom => String.t}) :: String.t
