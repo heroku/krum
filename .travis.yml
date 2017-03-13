@@ -1,0 +1,16 @@
+sudo: false
+language: elixir
+elixir:
+  - 1.2.3
+  - 1.4.2
+otp_release:
+  - 18.2.1
+env:
+  - MIX_ENV=test
+install:
+  - mix local.hex --force
+  - mix local.rebar --force
+  - mix hex.info
+before_script:
+  - mix deps.get
+script: mix test

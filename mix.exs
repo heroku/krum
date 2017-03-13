@@ -15,8 +15,8 @@ defmodule Krum.Mixfile do
   end
 
   defp deps do
-    [{:poison, "~> 2.1"},
-     {:httpoison, "~> 0.8.2"},
-     {:mock, "~> 0.1.3", only: :test}]
+    [{:poison, "~> 3.1"},
+     {:httpoison, "~> 0.11"},
+     {:mock, "~> 0.2", only: :test}]
   end
 end
