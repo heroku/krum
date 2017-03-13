@@ -4,6 +4,22 @@ Provides a simple API to send notifications through [Telex](https://github.com/h
 
 ## Installation
 
+Add an entry in your deps:
+
+```Elixir
+  defp deps do
+    [{:krum, github: "heroku/krum"}]
+  end
+```
+
+And add an entry to your application list:
+
+```Elixir
+  def application do
+    [applications: [:logger, :krum],]
+  end
+```
+
 ## Usage
 
 Currently, the krum application comes with a configuration that pulls the remote Telex server from the TELEX_URL environment variable.
